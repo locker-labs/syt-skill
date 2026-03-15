@@ -1,9 +1,9 @@
 const { createPublicClient, http, formatUnits, parseAbiItem } = require('viem');
 const { privateKeyToAccount } = require('viem/accounts');
 const { linea } = require('viem/chains');
+const { getRpcUrl, getPrivateKey } = require('./config');
 
-const SYT_ADDRESS = "0x060c1cBE54a34deCE77f27ca9955427c0e295Fd4"; // Linea sUSDC address 
-const USER_ADDRESS = privateKeyToAccount(process.env.AGENT_PRIVATE_KEY).address;
+const SYT_ADDRESS = "0x060c1cBE54a34deCE77f27ca9955427c0e295Fd4"; // Linea sUSDC address
 
 // Standard ERC20 balanceOf + decimals
 const balanceAbi = [
@@ -15,7 +15,7 @@ const balanceAbi = [
 async function main() {
     const publicClient = createPublicClient({
         chain: linea,
-        transport: http(process.env.RPC_URL)
+        transport: http(getRpcUrl())
     });
 
     if (!SYT_ADDRESS) {
@@ -24,7 +24,8 @@ async function main() {
     }
 
     // Default to the agent's own address if none is provided
-    const targetAddress = process.argv[2] || USER_ADDRESS;
+    const account = privateKeyToAccount(getPrivateKey());
+    const targetAddress = process.argv[2] || account.address;
 
     try {
         const [balance, decimals, symbol] = await Promise.all([

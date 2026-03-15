@@ -1,6 +1,7 @@
 const { createWalletClient, createPublicClient, http, parseUnits, parseAbiItem } = require('viem');
 const { privateKeyToAccount } = require('viem/accounts');
 const { linea } = require('viem/chains');
+const { getRpcUrl, getPrivateKey } = require('./config');
 
 const SYT_ADDRESS = "0x060c1cBE54a34deCE77f27ca9955427c0e295Fd4"; //sUSDC Linea
 
@@ -17,11 +18,11 @@ async function main() {
         return;
     }
 
-    const account = privateKeyToAccount(process.env.AGENT_PRIVATE_KEY);
+    const account = privateKeyToAccount(getPrivateKey());
     const amountInWei = parseUnits(amountStr, 6); // Assuming USDC 6 decimals
 
-    const publicClient = createPublicClient({ chain: linea, transport: http(process.env.RPC_URL) });
-    const walletClient = createWalletClient({ account, chain: linea, transport: http(process.env.RPC_URL) });
+    const publicClient = createPublicClient({ chain: linea, transport: http(getRpcUrl()) });
+    const walletClient = createWalletClient({ account, chain: linea, transport: http(getRpcUrl()) });
 
     console.log(`Preparing to send ${amountStr} sUSDC to ${recipient}...`);
 

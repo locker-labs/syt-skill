@@ -5,7 +5,7 @@ metadata:
   openclaw:
     requires:
       bins: ["node", "npm"]
-      env: ["AGENT_PRIVATE_KEY", "RPC_URL"]
+      env: []
 ---
 
 # AutoHODL SYT Agent

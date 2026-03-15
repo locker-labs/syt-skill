@@ -1,6 +1,7 @@
 const { createWalletClient, createPublicClient, http, parseUnits, parseAbiItem, maxUint256 } = require('viem');
 const { privateKeyToAccount } = require('viem/accounts');
 const { linea } = require('viem/chains');
+const { getRpcUrl, getPrivateKey } = require('./config');
 
 // Constants
 const LOCKER_ROUTER = '0xa289AE6ed8336CaB82626c3ff8e5Af334Eb7E0DE'; // Linea Router address
@@ -22,11 +23,11 @@ async function main() {
         return;
     }
 
-    const account = privateKeyToAccount(process.env.AGENT_PRIVATE_KEY);
+    const account = privateKeyToAccount(getPrivateKey());
     const amountInWei = parseUnits(depositAmount, 6);
 
-    const publicClient = createPublicClient({ chain: linea, transport: http(process.env.RPC_URL) });
-    const walletClient = createWalletClient({ account, chain: linea, transport: http(process.env.RPC_URL) });
+    const publicClient = createPublicClient({ chain: linea, transport: http(getRpcUrl()) });
+    const walletClient = createWalletClient({ account, chain: linea, transport: http(getRpcUrl()) });
 
     console.log(`Checking allowance for ${depositAmount} USDC...`);
 
