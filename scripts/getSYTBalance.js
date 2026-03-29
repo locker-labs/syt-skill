@@ -18,14 +18,8 @@ async function main() {
         transport: http(getRpcUrl())
     });
 
-    if (!SYT_ADDRESS) {
-        console.error("SYT_ADDRESS is not defined in the environment.");
-        return;
-    }
-
     // Default to the agent's own address if none is provided
-    const account = privateKeyToAccount(getPrivateKey());
-    const targetAddress = process.argv[2] || account.address;
+    const targetAddress = process.argv[2] || privateKeyToAccount(getPrivateKey()).address;
 
     try {
         const [balance, decimals, symbol] = await Promise.all([
@@ -50,6 +44,8 @@ async function main() {
         const formattedBalance = formatUnits(balance, decimals);
         console.log(`Address: ${targetAddress}`);
         console.log(`Balance: ${formattedBalance} ${symbol}`);
+        console.log(`\nManage your account: https://autohodl.money (connect the same wallet)`);
+        console.log(`Learn about SYTs: https://docs.autohodl.money`);
         
     } catch (error) {
         console.error("Error fetching balance:", error.message);

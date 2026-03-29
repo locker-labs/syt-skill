@@ -47,7 +47,10 @@ async function main() {
         args: [recipient, amountInWei]
     });
 
-    console.log(`Transfer successful! Transaction Hash: ${hash}`);
+    console.log(`Transaction Hash: ${hash}`);
+    await publicClient.waitForTransactionReceipt({ hash });
+    console.log("Transfer confirmed.");
+    console.log(`\nManage your account: https://autohodl.money (connect the same wallet)`);
 }
 
 main().catch(console.error);

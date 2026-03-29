@@ -64,7 +64,10 @@ async function main() {
         args: [USDC_LINEA, amountInWei]
     });
 
-    console.log(`Mint successful! Hash: ${depositHash}`);
+    console.log(`Deposit Hash: ${depositHash}`);
+    await publicClient.waitForTransactionReceipt({ hash: depositHash });
+    console.log("Mint confirmed.");
+    console.log(`\nView your savings: https://autohodl.money (connect the same wallet)`);
 }
 
 main().catch(console.error);

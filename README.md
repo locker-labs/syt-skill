@@ -1,6 +1,44 @@
-# AutoHODL SYT Skill
+# Passive Savings Crypto
 
-A skill for AI agents to manage sUSDC (Spendable Yield Tokens) on the Linea blockchain — converting idle USDC into yield-bearing tokens so users save while they spend.
+[![Built for Claude](https://img.shields.io/badge/Built%20for-Claude-8A2BE2?logo=anthropic&logoColor=white)](https://claude.ai)
+[![OpenClaw Compatible](https://img.shields.io/badge/OpenClaw-Compatible-00C2FF)](https://openclaw.ai)
+[![ClawBot Ready](https://img.shields.io/badge/ClawBot-Ready-00C2FF)](https://openclaw.ai)
+[![Powered by Aave](https://img.shields.io/badge/Powered%20by-Aave-B6509E?logo=aave&logoColor=white)](https://aave.com)
+[![Linea](https://img.shields.io/badge/Network-Linea-121212?logo=linea&logoColor=white)](https://linea.build)
+[![Base](https://img.shields.io/badge/Network-Base-0052FF?logo=base&logoColor=white)](https://base.org)
+
+> Turn idle USDC into yield — automatically. For AI agents and crypto wallets alike.
+
+**For agent developers:** This is a Claude skill and OpenClaw/ClawBot-compatible tool that gives your autonomous agent a yield-bearing wallet. Idle USDC earns Aave yield automatically in the background — no extra agent instructions needed. When your agent is ready to spend or transfer, funds move like regular USDC. Perfect for AI agent DeFi workflows where capital shouldn't sit dead between tasks.
+
+**For crypto users:** Passive income on USDC with zero manual claiming. Deposit once, watch your balance grow on Base and Linea via Aave yield. DeFi savings that work like a bank account — but onchain.
+
+---
+
+A Claude skill for AI agents to manage sUSDC (Spendable Yield Tokens) on the Linea blockchain — converting idle USDC into yield-bearing tokens so users save while they spend.
+
+## Install as a Claude Code Skill
+
+The fastest way — install directly from ClawHub:
+
+```bash
+npx clawhub@latest install passive-savings-crypto
+```
+
+Restart Claude Code and the skill loads automatically. Ask Claude things like "check my sUSDC balance" or "deposit 100 USDC" — it will know what to do.
+
+**To install from source instead:**
+
+```bash
+git clone https://github.com/locker-labs/passive-savings-crypto
+cd passive-savings-crypto
+npm install
+npm run install-skill
+```
+
+`npm run install-skill` copies `SKILL.md` to `~/.claude/skills/passive-savings-crypto/SKILL.md` — the directory Claude Code scans for user-installed skills. You only need to run it once, or again after pulling updates.
+
+---
 
 ## Overview
 
@@ -87,3 +125,19 @@ node scripts/transferSYT.js 0x7c334f35BF2B4a9e55f60CF3287c885598cF9A02 20
 **Rebase awareness** — sUSDC is a rebasing token. The raw balance returned by the contract increases over time as yield accrues. Always use `getSYTBalance.js` for the current balance rather than caching a previous value.
 
 **Infinite approval** — `mintSYT.js` requests unlimited USDC approval on first use to avoid repeated approval transactions. This is a common pattern for DeFi protocols.
+
+## Publishing to ClawHub
+
+Install the ClawHub CLI and authenticate once:
+
+```bash
+npm install -g clawhub
+clawhub login
+```
+
+Bump the version in `package.json`, then publish:
+
+```bash
+npm run release       # publish to ClawHub
+npm run release:dry   # preview without uploading
+```
